@@ -22,6 +22,19 @@ jobs:
           echo "Ref type: $GITHUB_REF_TYPE"
           echo "Event: $GITHUB_EVENT_NAME"
 
+      - name: Verify AWS role ARN
+        env:
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+        run: |
+          EXPECTED="arn:aws:iam::055143528572:role/nchandran-stockroom"
+
+          if [ "$AWS_ROLE_ARN" = "$EXPECTED" ]; then
+            echo "AWS_ROLE_ARN matches expected role"
+          else
+            echo "AWS_ROLE_ARN does NOT match expected role"
+            exit 1
+          fi
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6.2.4
         with:
