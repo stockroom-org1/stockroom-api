@@ -30,13 +30,13 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
         run: |
-          SHA_TAG=$ECR_REGISTRY:${{ github.sha }}
+          SHA_TAG=$ECR_REGISTRY/stockroom-api:${{ github.sha }}
           echo "sha_tag=$SHA_TAG" >> $GITHUB_OUTPUT
       
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             VERSION=${{ github.ref_name }}
-            echo "version_tag=$ECR_REGISTRY:$VERSION" >> $GITHUB_OUTPUT
-            echo "latest_tag=$ECR_REGISTRY:latest" >> $GITHUB_OUTPUT
+            echo "version_tag=$ECR_REGISTRY/stockroom-api:$VERSION" >> $GITHUB_OUTPUT
+            echo "latest_tag=$ECR_REGISTRY/stockroom-api:latest" >> $GITHUB_OUTPUT
             echo "is_release=true" >> $GITHUB_OUTPUT
           else
             echo "is_release=false" >> $GITHUB_OUTPUT
